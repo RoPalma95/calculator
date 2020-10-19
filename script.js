@@ -9,10 +9,11 @@ let operator = '';
 let a = 0;
 let b = 0;
 let pointAvailable = true;
-let tracker = 1;
+let tracker = true;
 
 display.textContent = 0;
 
+//**** mouse functionality ****
 numbers.forEach(number => number.addEventListener('click', writeNumber));
 point.addEventListener('click', writeFloat);
 operators.forEach(operator => operator.addEventListener('click', getOperator));
@@ -26,7 +27,7 @@ function writeNumber(e) {
 	} else {
 		display.textContent = '';
 		display.textContent += e.target.textContent;
-		tracker = 0;
+		tracker = false;
 	}
 }
 
@@ -36,29 +37,9 @@ function writeFloat(e) {
 	} else {
 		display.textContent = 0;
 		display.textContent += e.target.textContent;
-		tracker = 0;
+		tracker = false;
 	}
 	deactivateFloatPoint();
-}
-
-function deleteNumber() {
-	let dispContent = display.textContent.split('');
-	dispContent.pop();
-	display.textContent = dispContent.join('');
-}
-
-function activateFloatPoint() {
-	pointAvailable = true;
-	point.addEventListener('click', writeFloat);
-}
-
-function deactivateFloatPoint() {
-	pointAvailable = false;
-	point.removeEventListener('click', writeFloat);
-}
-
-function getNumber() {
-	return +display.textContent;
 }
 
 function getOperator(e) {
@@ -72,15 +53,7 @@ function getOperator(e) {
 		operator = e.target.textContent;
 	}
 	if(!pointAvailable)	activateFloatPoint();
-	tracker += 1; 
-}
-
-function clearVariables() {
-	display.textContent = 0;
-	a = 0;
-	b = 0;
-	if(!pointAvailable)	activateFloatPoint();
-	tracker += 1;
+	tracker = true; 
 }
 
 function makeCalc() {
@@ -89,20 +62,125 @@ function makeCalc() {
 	a = 0;
 	b = 0;
 	if(!pointAvailable)	activateFloatPoint();
-	tracker += 1;
+	tracker = true;
+}
+
+//**** keyboard functionality ****
+document.addEventListener('keydown', typeNumber);
+document.addEventListener('keydown', typeOperator);
+document.addEventListener('keydown', typeFloat);
+document.addEventListener('keydown', keyboardClear);
+document.addEventListener('keydown', keyboardCalc);
+document.addEventListener('keydown', backspace);
+
+function typeNumber(e) {
+	if(!isNaN(e.key)) {
+		if(!tracker){
+			display.textContent += e.key;
+		} else {
+			display.textContent = '';
+			display.textContent += e.key;
+			tracker = false;
+		}
+	}
+}
+
+function typeOperator(e) {
+	if(e.key == '+' || e.key == '-' || e.key == '*' || e.key == '/'){
+		if(a) {
+			b = getNumber();
+			a = operate(operator, a, b);
+			display.textContent = a;
+			operator = e.key;
+		} else {
+			a = getNumber();
+			operator = e.key;
+		}
+		if(!pointAvailable)	activateFloatPoint();
+		tracker = true;
+	} 
+}
+
+function typeFloat(e) {
+	if(e.key == '.') {
+		if(!tracker) {
+			display.textContent += e.key; 
+		} else {
+			display.textContent = 0;
+			display.textContent += e.key;
+			tracker = false;
+		}
+		deactivateFloatPoint();
+	}
+}
+
+function keyboardClear(e) {
+	if(e.key == 'Escape') clearVariables();
+}
+
+function keyboardCalc(e) {
+	if(e.key == 'Enter') makeCalc();
+}
+
+function backspace(e) {
+	if(e.key == 'Backspace') deleteNumber();
+}
+
+//**** misc functions ****
+function getNumber() {
+	return +display.textContent;
+}
+
+function clearVariables() {
+	display.textContent = 0;
+	a = 0;
+	b = 0;
+	if(!pointAvailable)	activateFloatPoint();
+	tracker = 1;
+}
+
+function deleteNumber() {
+	let dispContent = display.textContent.split('');
+	dispContent.pop();
+	display.textContent = dispContent.join('');
+}
+
+function activateFloatPoint() {
+	pointAvailable = true;
+	point.addEventListener('click', writeFloat);
+	document.addEventListener('keydown', typeFloat);
+}
+
+function deactivateFloatPoint() {
+	pointAvailable = false;
+	point.removeEventListener('click', writeFloat);
+	document.removeEventListener('keydown', typeFloat);
 }
 
 const operations = {
 	'+': function(a, b) {  //addition
 		return a + b;
-		},
+	},
 	'‐': function (a , b) { //subtraction
 		return a - b;
-		},
+	},
+	'-': function (a , b) { //subtraction
+		return a - b;
+	},
 	'⨯': function (a, b) {  //multiplication
 		return a * b;
-		},
+	},
+	'*': function (a, b) {  //multiplication
+		return a * b;
+	},
 	'÷': function (a, b) {  //divition
+		if(b === 0) {
+			clearVariables();
+			return 'REALITY BROKEN';
+		}
+		return a / b;
+	},
+	'/': function (a, b) {  //divition
 		if(b === 0) {
 			clearVariables();
 			return 'REALITY BROKEN';
