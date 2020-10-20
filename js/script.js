@@ -190,6 +190,6 @@ const operations = {
 };
 
 function operate(operator, a, b) {
-	return operations[operator](a, b);
+	return Math.round(operations[operator](a, b) * 100000) / 100000;  //rounded to 5 decimal places
 }
 
