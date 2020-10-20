@@ -1,0 +1,78 @@
+body {
+	background: url('../images/volkan-olmez-aG-pvyMsbis-unsplash.jpg') center / cover no-repeat;
+}
+
+.main-content {
+	border: 1px solid black;
+	margin: 10% auto;
+	height: 55vh;
+	width: 25vw;
+	border-radius: 8px;
+	background-color: rgb(0, 0, 0);
+}
+
+.bezel {
+	height: 95%;
+	display: grid;
+	grid-template: 1fr 5fr / 5fr 1fr;
+	grid-template-areas: 
+		"display display"
+		"number-btns operation-btns";
+	font-family: 'B612 Mono', monospace;
+	border: 1px solid black;
+	margin: 10px;
+	border-radius: 8px;
+	background-color: white;
+}
+
+
+.display-container {
+	height: 100%;
+	grid-area: display;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	border-bottom: 1px solid black;
+	background-color: rgba(59, 99, 59, 0.856);
+}
+
+.display {
+	text-align: right;
+	padding-right: 10px;
+	font-family: 'Nova Mono', monospace;
+	font-size: 3em;
+	font-weight: 700;
+	background-color: transparent;
+}
+
+.numbers {
+	grid-area: number-btns;
+	display: grid;
+	grid-template: repeat(4, 1fr) / repeat(3, 1fr);
+}
+
+.operators {
+	grid-area: operation-btns;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+.operators > button {
+	flex-grow: 1;
+}
+
+button {
+	border: none;
+	font-size: 1.5em;
+	border-radius: 8px;
+	background-color: transparent
+}
+
+button:hover {
+	background-color: rgba(32, 96, 214, 0.753);
+}
+
+button:focus {
+	outline: none;
+}

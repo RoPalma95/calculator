@@ -4,38 +4,42 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Calculator</title>
-	<link rel="stylesheet" href="styles.css" type="text/css">
-	<script src="script.js" defer></script>
+	<link rel="stylesheet" href="../css/resets.css" type="text/css">
+	<link href="https://fonts.googleapis.com/css2?family=B612+Mono&family=Nova+Mono&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="../css/styles.css" type="text/css">
+	<script src="../js/script.js" defer></script>
 </head>
 <body>
 	<main class='main-content'>
-		<div class="display-container">
-			<div class="display"></div>
+		<div class="bezel">
+			<div class="display-container">
+				<div class="display"></div>
+			</div>
+			<div class="numbers">
+				<button class="number 7">7</button>
+				<button class="number 8">8</button>
+				<button class="number 9">9</button>	
+				<button class="number 4">4</button>
+				<button class="number 5">5</button>
+				<button class="number 6">6</button>
+				<button class="number 1">1</button>
+				<button class="number 2">2</button>
+				<button class="number 3">3</button>
+				<button class="float-point">&period;</button>
+				<button class="number 0">0</button>
+				<button class="equals">&equals;</button>
+			</div>
+			<div class="operators">
+				<button class="clear">CE</button>
+				<button class="backspace">&LeftTeeArrow;</button>
+				<button class="operator">&div;</button>
+				<button class="operator">&Cross;</button>
+				<button class="operator">&dash;</button>
+				<button class="operator">&plus;</button>
+			</div>
 		</div>
-		<div class="numbers">
-			<button class="number 0">0</button>
-			<button class="number 1">1</button>
-			<button class="number 2">2</button>
-			<button class="number 3">3</button>
-			<button class="number 4">4</button>
-			<button class="number 5">5</button>
-			<button class="number 6">6</button>
-			<button class="number 7">7</button>
-			<button class="number 8">8</button>
-			<button class="number 9">9</button>	
-			<button class="float-point">&period;</button>
-		</div>
-		<div class="operators">
-			<button class="operator">&plus;</button>
-			<button class="operator">&dash;</button>
-			<button class="operator">&Cross;</button>
-			<button class="operator">&div;</button>
-			<button class="clear">CE</button>
-			<button class="backspace">&LeftTeeArrow;</button>
-		</div>
-		<div class="result">
-			<button class="equals">&equals;</button>
-		</div>
+		
+		
 		
 	</main>
 </body>

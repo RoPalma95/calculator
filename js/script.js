@@ -65,7 +65,7 @@ function makeCalc() {
 	tracker = true;
 }
 
-//**** keyboard functionality ****
+//**** keyboard functionality **** (needs adjustments)
 document.addEventListener('keydown', typeNumber);
 document.addEventListener('keydown', typeOperator);
 document.addEventListener('keydown', typeFloat);
