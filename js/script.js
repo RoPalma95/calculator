@@ -65,16 +65,12 @@ function makeCalc() {
 	tracker = true;
 }
 
-//**** keyboard functionality **** (needs adjustments)
-document.addEventListener('keydown', typeNumber);
-document.addEventListener('keydown', typeOperator);
-document.addEventListener('keydown', typeFloat);
-document.addEventListener('keydown', keyboardClear);
-document.addEventListener('keydown', keyboardCalc);
-document.addEventListener('keydown', backspace);
+//**** keyboard functionality **** may need optimization
+document.addEventListener('keydown', keybordFunctionality)
 
-function typeNumber(e) {
-	if(!isNaN(e.key)) {
+
+function keybordFunctionality(e) {
+	if(!isNaN(e.key)) {			// type numbers
 		if(!tracker){
 			display.textContent += e.key;
 		} else {
@@ -82,11 +78,7 @@ function typeNumber(e) {
 			display.textContent += e.key;
 			tracker = false;
 		}
-	}
-}
-
-function typeOperator(e) {
-	if(e.key == '+' || e.key == '-' || e.key == '*' || e.key == '/'){
+	} else if(e.key == '+' || e.key == '-' || e.key == '*' || e.key == '/'){		// type and capture operators
 		if(a) {
 			b = getNumber();
 			a = operate(operator, a, b);
@@ -98,11 +90,7 @@ function typeOperator(e) {
 		}
 		if(!pointAvailable)	activateFloatPoint();
 		tracker = true;
-	} 
-}
-
-function typeFloat(e) {
-	if(e.key == '.') {
+	} else if(e.key == '.' && pointAvailable) {		// type and activate/deactivate floating point
 		if(!tracker) {
 			display.textContent += e.key; 
 		} else {
@@ -111,19 +99,9 @@ function typeFloat(e) {
 			tracker = false;
 		}
 		deactivateFloatPoint();
-	}
-}
-
-function keyboardClear(e) {
-	if(e.key == 'Escape') clearVariables();
-}
-
-function keyboardCalc(e) {
-	if(e.key == 'Enter') makeCalc();
-}
-
-function backspace(e) {
-	if(e.key == 'Backspace') deleteNumber();
+	} else if(e.key == 'Escape') clearVariables();		// clear with Escape
+	else if(e.key == 'Enter') makeCalc();		// make calculation with Enter
+	else if(e.key == 'Backspace') deleteNumber();		// backspace
 }
 
 //**** misc functions ****
@@ -136,7 +114,7 @@ function clearVariables() {
 	a = 0;
 	b = 0;
 	if(!pointAvailable)	activateFloatPoint();
-	tracker = 1;
+	tracker = true;
 }
 
 function deleteNumber() {
@@ -148,13 +126,11 @@ function deleteNumber() {
 function activateFloatPoint() {
 	pointAvailable = true;
 	point.addEventListener('click', writeFloat);
-	document.addEventListener('keydown', typeFloat);
 }
 
 function deactivateFloatPoint() {
 	pointAvailable = false;
 	point.removeEventListener('click', writeFloat);
-	document.removeEventListener('keydown', typeFloat);
 }
 
 const operations = {
@@ -192,4 +168,3 @@ const operations = {
 function operate(operator, a, b) {
 	return Math.round(operations[operator](a, b) * 100000) / 100000;  //rounded to 5 decimal places
 }
-
